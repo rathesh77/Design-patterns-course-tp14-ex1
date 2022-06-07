@@ -1,5 +1,3 @@
-package fr.aseure.tp014.ex1;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +10,8 @@ public class SortedList {
 
     // PUT
     public void add(List<Long> values) {
-
         if (values.size() == 0) {
-            System.out.println("error le tableau est vide");
+            System.out.println("Tableau vide");
             return;
         }
         int start = 0;
@@ -23,22 +20,12 @@ public class SortedList {
            start = 1;
         }
         for (int i = start; i < values.size(); i++) {
-            System.out.println(values.get(i));
             this.tree.add(values.get(i));
         }
     }
 
     // DELETE
-    public void remove(List<Long> values) throws CloneNotSupportedException {
-        //if (this.tree != null)
-        if (values.size() == 0) {
-            System.out.println("error le tableau est vide");
-            return;
-        }
-        if (this.tree == null) {
-            System.out.println("error tree vide");
-            return;
-        }
+    public void remove(List<Long> values) {
         for (int i = 0; i < values.size(); i++) {
             if (this.tree == null) {
                 break;
@@ -49,9 +36,8 @@ public class SortedList {
 
     // GET
     public List<Long> snapshot() {
-        if (this.tree == null) {
+        if (this.tree == null)
             return new ArrayList<>();
-        }
         return this.tree.snapshot();
     }
 }

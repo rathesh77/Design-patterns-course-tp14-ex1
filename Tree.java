@@ -1,20 +1,17 @@
-package fr.aseure.tp014.ex1;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tree implements Cloneable{
-    public Long entier;
-    public Tree left = null;
-    public Tree right = null;
-    public Tree parent = null;
+public class Tree {
+    private Long value;
+    private Tree left = null;
+    private Tree right = null;
 
-    public Tree(Long entier) {
-        this.entier = entier;
+    public Tree(Long value) {
+        this.value = value;
     }
 
     public Tree add(Long num) {
-        if (num > this.entier) {
+        if (num > this.value) {
             if (this.right != null) {
                 return this.right.add(num);
             } else {
@@ -40,8 +37,8 @@ public class Tree implements Cloneable{
             return 1;
         return 0;
     }
-    // on prend le noeud le plus grand dans le fils gauche du cursor
-    public Tree getInOrderSuccNode() throws CloneNotSupportedException {
+
+    public Tree getInOrderSuccNode() {
         Tree cursor = this;
         Tree previous = this;
 
@@ -56,13 +53,12 @@ public class Tree implements Cloneable{
                 break;
             }
         }
-        Tree temp =(Tree) previous.right.clone();
-        previous.right = previous.right.remove(previous.right.entier);
-        //previous.right = null;
+        Tree temp = new Tree(previous.right.value);
+        previous.right = previous.right.remove(previous.right.value);
         return temp;
     }
 
-    public Tree getInOrderPredNode() throws CloneNotSupportedException {
+    public Tree getInOrderPredNode() {
         Tree cursor = this;
         Tree previous = this;
 
@@ -77,20 +73,20 @@ public class Tree implements Cloneable{
                 break;
             }
         }
-        Tree temp = (Tree) previous.left.clone();
-        previous.left = previous.left.remove(previous.left.entier);
+        Tree temp = new Tree(previous.left.value);
+        previous.left = previous.left.remove(previous.left.value);
         return temp;
     }
-    public Tree remove(long num) throws CloneNotSupportedException {
+    public Tree remove(long num){
         Tree save = this;
         Tree cursor = this;
         Tree previous = this;
-        if (previous.entier == num && previous.getNbChildren() == 0) {
+        if (previous.value == num && previous.getNbChildren() == 0) {
             return null;
         }
-        while (cursor != null && cursor.entier != num) {
+        while (cursor != null && cursor.value != num) {
 
-            if (num > cursor.entier) {
+            if (num > cursor.value) {
                 previous = cursor;
                 cursor = cursor.right;
             } else {
@@ -108,24 +104,24 @@ public class Tree implements Cloneable{
         if (cursor.getNbChildren() >= 1) {
             if (cursor.left == null) {
                 if (cursor.right.left == null) {
-                    cursor.entier = cursor.right.entier;
+                    cursor.value = cursor.right.value;
                     cursor.right = cursor.right.right;
                 } else {
                     inOrderElement = cursor.right.getInOrderPredNode();
-                    cursor.entier = inOrderElement.entier;
+                    cursor.value = inOrderElement.value;
                 }
             } else {
                 if (cursor.left.right == null) {
-                    cursor.entier = cursor.left.entier;
+                    cursor.value = cursor.left.value;
                     cursor.left = cursor.left.left;
                 } else {
                     inOrderElement = cursor.left.getInOrderSuccNode();
-                    cursor.entier = inOrderElement.entier;
+                    cursor.value = inOrderElement.value;
                 }
             }
 
         } else {
-            if (previous.right != null && previous.right.entier == num) {
+            if (previous.right != null && previous.right.value == num) {
                 previous.right = null;
             } else {
                 previous.left = null;
@@ -144,13 +140,13 @@ public class Tree implements Cloneable{
 
     public void getNextChild(Tree tree, List<Long> arr) {
         if (tree.left == null && tree.right == null) {
-            arr.add(tree.entier);
+            arr.add(tree.value);
             return;
         }
         if (tree.left != null) {
             getNextChild(tree.left, arr);
         }
-        arr.add(tree.entier);
+        arr.add(tree.value);
         if (tree.right != null) {
             getNextChild(tree.right, arr);
         }

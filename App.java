@@ -1,5 +1,3 @@
-package fr.aseure.tp014.ex1;
-
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
